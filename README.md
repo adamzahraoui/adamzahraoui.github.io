@@ -35,6 +35,7 @@ npm run refresh:github   # refresh the GitHub data snapshot
 | Name, monogram, site meta / SEO text | `meta`, `brand` |
 | Profile photo shown in the hero | `meta.avatarUrl` (file in `public/images/`) |
 | Hero headline, intro, action buttons | `hero` |
+| CV files, languages, download labels | `hero.cv` (files in `public/cv/`) |
 | About copy and fact list | `about` |
 | Skill groups and badges | `skills.groups` |
 | Featured projects (name, description, tech, links, kind) | `projects.items` |
@@ -72,21 +73,43 @@ snapshot is left untouched and the script exits non-zero.
 
 The site itself never calls GitHub: the snapshot is imported at build time.
 
-## Adding a CV
+## The bilingual CV
 
-1. Put the PDF in `public/cv/`, for example `public/cv/adam-zahraoui-cv.pdf`.
-2. In `src/data/portfolio.ts`, set:
+The hero shows a **Curriculum vitae** panel with two rows: **Download CV**
+(English / Français) and **View CV** (English / Français, opens in a new tab).
 
-```ts
-hero: {
-  cvUrl: '/cv/adam-zahraoui-cv.pdf',
-  // ...
-}
+| Language | HTML (`public/cv/`) | PDF (`public/cv/`) |
+| --- | --- | --- |
+| English | `adam-zahraoui-cv.html` | `adam-zahraoui-cv-en.pdf` |
+| Français | `adam-zahraoui-cv-fr.html` | `adam-zahraoui-cv-fr.pdf` |
+
+All four paths live in `hero.cv.languages` in `src/data/portfolio.ts`, so adding
+a language or renaming a file is a one-place edit.
+
+- **Downloads only appear for real files.** A language is listed under
+  *Download CV* only when its `pdf` value is set; set `pdf: null` and that
+  download disappears while the *View CV* link stays. `npm run build` starts
+  with `scripts/check-cv.mjs`, which fails the build if a declared file is
+  missing or is not a genuine PDF — HTML is never renamed to `.pdf`.
+- **Regenerating the PDFs.** They are printed from the HTML with headless
+  Chromium (A4, 12 mm margins, toolbar hidden, links kept clickable):
+
+```bash
+CHROME="$(ls -d ~/.cache/ms-playwright/chromium_headless_shell-*/chrome-headless-shell-linux64/chrome-headless-shell | tail -1)"
+for pair in "adam-zahraoui-cv.html:adam-zahraoui-cv-en.pdf" \
+            "adam-zahraoui-cv-fr.html:adam-zahraoui-cv-fr.pdf"; do
+  src="${pair%%:*}"; out="${pair##*:}"
+  "$CHROME" --no-sandbox --disable-gpu --no-pdf-header-footer \
+    --print-to-pdf="$PWD/public/cv/$out" "file://$PWD/public/cv/$src"
+done
 ```
 
-The “Download CV” button appears in the hero automatically. When `cvUrl` is
-`null` the button is not rendered, which is the current state because no CV file
-exists in this repository.
+- **If PDFs cannot be generated**, leave `pdf: null` for that language: the
+  *View CV* links keep working and each HTML page has its own
+  “Print / Save as PDF” (“Imprimer / Enregistrer en PDF”) button, so visitors
+  can print it themselves.
+- Print styling lives in each HTML file’s `@media print` block (`@page A4`,
+  `.toolbar { display: none }`, `break-inside: avoid` on entries and projects).
 
 ## The project terminal
 

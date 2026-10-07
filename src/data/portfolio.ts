@@ -9,8 +9,8 @@ import snapshot from './github-snapshot.json'
  *  generated (help text, error messages) lives in src/lib/terminal.ts.
  *
  *  • github snapshot ... regenerated with `npm run refresh:github`
- *  • CV              ... drop a PDF at `public/cv/adam-zahraoui-cv.pdf` and
- *                        set `cvUrl` below; the button then appears in the hero.
+ *  • CV              ... files live in `public/cv/`; `hero.cv` lists the HTML
+ *                        and PDF paths per language (see the comment there).
  */
 
 export interface SocialLink {
@@ -43,6 +43,16 @@ export interface EducationEntry {
   details: string[]
 }
 
+export interface CvLanguage {
+  code: string
+  /** Shown on the link, in the language's own name. */
+  label: string
+  /** HTML version (public/cv/) — always linked, opens in a new tab. */
+  html: string
+  /** PDF version (public/cv/) — link is rendered only when set to a real file. */
+  pdf: string | null
+}
+
 const profile = snapshot.profile
 
 export const portfolio = {
@@ -71,9 +81,33 @@ export const portfolio = {
     chips: ['C & C++ systems', 'React / Next.js / TypeScript', 'Linux · Docker · DevOps'],
     primaryAction: { label: 'View projects', href: '#projects' },
     secondaryAction: { label: 'GitHub profile', href: profile.htmlUrl },
-    /** Set to a real file path (e.g. '/cv/adam-zahraoui-cv.pdf') to show a Download CV button. */
-    cvUrl: null as string | null,
-    cvLabel: 'Download CV',
+    /**
+     *  Bilingual CV. Files live in `public/cv/`.
+     *  • `html` — “View CV” links (open in a new tab)
+     *  • `pdf`  — “Download CV” links; only rendered when it points at a real
+     *             file, so set it to `null` to hide a language's download.
+     *             The build (`scripts/check-cv.mjs`) fails if a declared file
+     *             is missing, so a broken download can never ship.
+     */
+    cv: {
+      label: 'Curriculum vitae',
+      downloadLabel: 'Download CV',
+      viewLabel: 'View CV',
+      languages: [
+        {
+          code: 'en',
+          label: 'English',
+          html: '/cv/adam-zahraoui-cv.html',
+          pdf: '/cv/adam-zahraoui-cv-en.pdf',
+        },
+        {
+          code: 'fr',
+          label: 'Français',
+          html: '/cv/adam-zahraoui-cv-fr.html',
+          pdf: '/cv/adam-zahraoui-cv-fr.pdf',
+        },
+      ] satisfies CvLanguage[],
+    },
   },
 
   about: {

@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { ArrowDown, Download } from 'lucide-react'
+import { ArrowDown, Download, ExternalLink, FileText } from 'lucide-react'
 import { GithubIcon } from './BrandIcons'
 import { github, portfolio } from '../data/portfolio'
 
@@ -80,17 +80,62 @@ export function Hero() {
                 <GithubIcon size={16} aria-hidden="true" />
                 {hero.secondaryAction.label}
               </a>
+            </div>
 
-              {hero.cvUrl ? (
-                <a
-                  href={hero.cvUrl}
-                  download
-                  className="inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-5 py-3 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-surface-2"
-                >
-                  <Download size={16} aria-hidden="true" />
-                  {hero.cvLabel}
-                </a>
-              ) : null}
+            <div
+              className="hero-in mt-8 w-full max-w-xl rounded-2xl border border-line bg-surface p-4 sm:p-5"
+              style={{ '--reveal-delay': '540ms' } as CSSProperties}
+              role="group"
+              aria-label={hero.cv.label}
+            >
+              <p className="flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
+                <FileText size={13} aria-hidden="true" />
+                {hero.cv.label}
+              </p>
+
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <span className="text-sm font-medium text-ink">{hero.cv.downloadLabel}</span>
+                <div className="flex flex-wrap gap-2">
+                  {hero.cv.languages
+                    .filter((language) => language.pdf)
+                    .map((language) => (
+                      <a
+                        key={`download-${language.code}`}
+                        href={language.pdf ?? undefined}
+                        download
+                        lang={language.code}
+                        hrefLang={language.code}
+                        aria-label={`${hero.cv.downloadLabel} — ${language.label} (PDF)`}
+                        className="inline-flex items-center gap-2 rounded-lg border border-line bg-surface-2 px-3 py-2 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+                      >
+                        <Download size={13} aria-hidden="true" />
+                        {language.label}
+                        <span className="font-mono text-[10px] text-muted">PDF</span>
+                      </a>
+                    ))}
+                </div>
+              </div>
+
+              <div className="mt-3 flex flex-col gap-3 border-t border-line pt-3 sm:flex-row sm:items-center sm:justify-between">
+                <span className="text-sm font-medium text-ink">{hero.cv.viewLabel}</span>
+                <div className="flex flex-wrap gap-2">
+                  {hero.cv.languages.map((language) => (
+                    <a
+                      key={`view-${language.code}`}
+                      href={language.html}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      lang={language.code}
+                      hrefLang={language.code}
+                      aria-label={`${hero.cv.viewLabel} — ${language.label} (opens in a new tab)`}
+                      className="inline-flex items-center gap-2 rounded-lg border border-line bg-surface-2 px-3 py-2 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+                    >
+                      <ExternalLink size={13} aria-hidden="true" />
+                      {language.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
