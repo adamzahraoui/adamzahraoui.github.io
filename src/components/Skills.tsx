@@ -6,7 +6,7 @@ export function Skills() {
   const { skills } = portfolio
 
   return (
-    <Section id="skills" index="02" eyebrow="Skills" heading={skills.heading} intro={skills.intro}>
+    <Section id="skills" index="03" eyebrow="Skills" heading={skills.heading} intro={skills.intro}>
       <div className="grid gap-6 sm:grid-cols-2">
         {skills.groups.map((group, index) => (
           <Reveal key={group.title} delay={index * 70}>

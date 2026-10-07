@@ -9,7 +9,7 @@ export function Education() {
   return (
     <Section
       id="education"
-      index="05"
+      index="06"
       eyebrow="Education"
       heading={education.heading}
       intro={education.intro}

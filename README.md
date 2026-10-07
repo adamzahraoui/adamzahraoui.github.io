@@ -37,8 +37,9 @@ npm run refresh:github   # refresh the GitHub data snapshot
 | Hero headline, intro, action buttons | `hero` |
 | CV files, languages, download labels | `hero.cv` (files in `public/cv/`) |
 | About copy and fact list | `about` |
+| Knowledge sharing copy and photos | `knowledgeSharing` (files in `public/images/`) |
 | Skill groups and badges | `skills.groups` |
-| Featured projects (name, description, tech, links, kind) | `projects.items` |
+| Featured projects (name, description, tech, links, kind, status/role) | `projects.items` |
 | Short repo list under the grid | `projects.moreRepos` |
 | Terminal heading, welcome text, prompt, cd hint, quick buttons | `terminal` |
 | Education entry and stated goals | `education` |
@@ -46,7 +47,10 @@ npm run refresh:github   # refresh the GitHub data snapshot
 | Footer text and links | `footer` |
 | Section links in the navigation | `nav` |
 
-Types are exported from the same file (`Project`, `SkillGroup`, `SocialLink`, `EducationEntry`), so edits are type-checked.
+Types are exported from the same file (`Project`, `SkillGroup`, `SocialLink`, `EducationEntry`,
+`KnowledgeSharing`), so edits are type-checked. A project's card becomes clickable as soon as it
+has a real `repoUrl`; cards without one (for example an in-progress project whose repository is
+not public yet) stay visible but are not linked — never invent a URL.
 
 The one exception is the terminal's generated copy — `help` text, error messages
 and the exact command list live in

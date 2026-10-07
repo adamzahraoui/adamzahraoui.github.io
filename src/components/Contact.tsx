@@ -31,7 +31,7 @@ export function Contact() {
   return (
     <Section
       id="contact"
-      index="06"
+      index="07"
       eyebrow="Contact"
       heading={contact.heading}
       intro={contact.intro}

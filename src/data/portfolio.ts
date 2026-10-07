@@ -31,9 +31,11 @@ export interface Project {
   description: string
   details: string[]
   tech: string[]
-  repoUrl: string
+  repoUrl?: string
   demoUrl?: string
-  kind: 'Original project' | 'Pair project' | 'Coursework'
+  kind: 'Original project' | 'Pair project' | 'Team project' | 'Coursework'
+  status?: string
+  role?: string
 }
 
 export interface EducationEntry {
@@ -46,6 +48,18 @@ export interface MoreRepo {
   name: string
   note: string
   repoUrl: string
+}
+export interface KnowledgePhoto {
+  src: string
+  alt: string
+  width: number
+  height: number
+}
+
+export interface KnowledgeSharing {
+  title: string
+  text: string
+  photos: KnowledgePhoto[]
 }
 
 export interface CvLanguage {
@@ -171,6 +185,21 @@ export const portfolio = {
       'Infrastructure, systems and algorithm work from the 42 curriculum and beyond. Every project links to its repository, where you can read the README and the source.',
     items: [
       {
+        name: 'TalentFit (ft_transcendence)',
+        tagline: 'Interview preparation & company coding labs platform',
+        description:
+          'A collaborative platform for developer interview preparation and company coding labs. Planned features include student and recruiter experiences, coding workspaces, solution submissions, AI-assisted feedback, and company-initiated messaging. The repository currently holds the agreed project structure together with the product feature map, team roles and architecture decisions; application code is being built on top of that foundation.',
+        details: [
+          'Planned, not yet built: student and recruiter experiences, coding workspaces, solution submissions, AI-assisted feedback and company-initiated messaging.',
+          'In progress: project structure and the product, roles and architecture documentation; the web application scaffold is under construction.',
+          'Student-facing interfaces and relevant APIs, alongside delivery coordination, dependencies and team blockers.',
+        ],
+        tech: [],
+        kind: 'Team project',
+        status: 'In progress',
+        role: 'Project Manager & Full Stack Developer',
+      },
+      {
         name: 'Inception',
         tagline: 'Containerized WordPress infrastructure with Docker Compose',
         description:
@@ -284,6 +313,25 @@ export const portfolio = {
     moreReposNote: 'Coursework repositories, each with its own README.',
   },
 
+  knowledgeSharing: {
+    title: 'Knowledge sharing',
+    text: 'Sharing programming concepts, discussing ideas, and learning together.',
+    photos: [
+      {
+        src: '/images/knowledge-speaking.jpg',
+        alt: 'Close-up of Adam Zahraoui speaking beside a whiteboard',
+        width: 800,
+        height: 1000,
+      },
+      {
+        src: '/images/knowledge-presentation.jpg',
+        alt: 'Wider view of the presentation with the audience in front of the slides',
+        width: 1179,
+        height: 750,
+      },
+    ],
+  } as KnowledgeSharing,
+
   terminal: {
     heading: 'Explore my projects',
     intro:
@@ -358,6 +406,7 @@ export const portfolio = {
 
   nav: [
     { label: 'About', href: '#about' },
+    { label: 'Knowledge', href: '#knowledge' },
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
     { label: 'Education', href: '#education' },

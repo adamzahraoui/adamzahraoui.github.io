@@ -8,7 +8,7 @@ export function TerminalSection() {
   return (
     <Section
       id="terminal"
-      index="04"
+      index="05"
       eyebrow="Terminal"
       heading={terminal.heading}
       intro={terminal.intro}
