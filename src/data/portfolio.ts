@@ -42,6 +42,11 @@ export interface EducationEntry {
   context: string
   details: string[]
 }
+export interface MoreRepo {
+  name: string
+  note: string
+  repoUrl: string
+}
 
 export interface CvLanguage {
   code: string
@@ -269,13 +274,13 @@ export const portfolio = {
 
     /** Shown as a compact list under the grid. */
     moreRepos: [
-      { name: 'NetPractice', note: 'IP addressing, subnetting and routing exercises' },
-      { name: 'so_long', note: '2D maze game with MiniLibX' },
-      { name: 'Minitalk', note: 'Client/server messaging over Unix signals' },
-      { name: 'ft_printf', note: 'Recreation of printf with format specifiers' },
-      { name: 'get_next_line', note: 'Line-by-line file descriptor reader' },
-      { name: '1337 Pool', note: 'One-month introductory pool exercises' },
-    ],
+      { name: 'NetPractice', note: 'IP addressing, subnetting and routing exercises', repoUrl: 'https://github.com/adamzahraoui/42-NetPractice' },
+      { name: 'so_long', note: '2D maze game with MiniLibX', repoUrl: 'https://github.com/adamzahraoui/42-so_long' },
+      { name: 'Minitalk', note: 'Client/server messaging over Unix signals', repoUrl: 'https://github.com/adamzahraoui/42-Minitalk' },
+      { name: 'ft_printf', note: 'Recreation of printf with format specifiers', repoUrl: 'https://github.com/adamzahraoui/42-ft_printf' },
+      { name: 'get_next_line', note: 'Line-by-line file descriptor reader', repoUrl: 'https://github.com/adamzahraoui/42-get_next_line' },
+      { name: '1337 Pool', note: 'One-month introductory pool exercises', repoUrl: 'https://github.com/adamzahraoui/42-pool' },
+    ] as MoreRepo[],
     moreReposNote: 'Coursework repositories, each with its own README.',
   },
 
