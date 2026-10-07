@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Adam Zahraoui">
+  <rect width="64" height="64" rx="14" fill="#070c17" />
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#2b4d8f" stroke-width="1.5" />
+  <path
+    d="M32 14 L48 50 H40.6 L37.4 42.4 H26.6 L23.4 50 H16 Z M28.6 36.4 H35.4 L32 28.2 Z"
+    fill="#5b96ff"
+  />
+</svg>

@@ -1,0 +1,169 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Theme tokens
+   Dark is the default; `.dark` on <html> switches to the light theme.
+   Values are injected by the inline script in index.html before paint.
+------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --bg: #f4f6fb;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #eef1f8;
+  --line: #d9dfeb;
+  --line-strong: #c3ccdd;
+  --ink: #0c1424;
+  --muted: #54617a;
+  --accent: #1d4ed8;
+  --accent-strong: #1e40af;
+  --accent-soft: rgba(29, 78, 216, 0.09);
+  --shadow: 0 18px 40px -28px rgba(12, 20, 36, 0.45);
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #070c17;
+  --bg-elevated: #0a1120;
+  --surface: #0d1526;
+  --surface-2: #121c31;
+  --line: rgba(94, 132, 196, 0.22);
+  --line-strong: rgba(122, 160, 224, 0.38);
+  --ink: #e7edf9;
+  --muted: #9aa9c4;
+  --accent: #5b96ff;
+  --accent-strong: #7aa9ff;
+  --accent-soft: rgba(91, 150, 255, 0.12);
+  --shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.85);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+
+  --font-sans: 'Inter Variable', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------------
+   Entrance animation
+------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s cubic-bezier(0.22, 0.68, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal[data-visible='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-in {
+  animation: hero-in 0.7s cubic-bezier(0.22, 0.68, 0.3, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes subtle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.avatar-float {
+  animation: subtle-float 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .hero-in,
+  .avatar-float {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Small utilities
+------------------------------------------------------------------- */
+@utility text-balance-tight {
+  text-wrap: balance;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  opacity: 0.55;
+}
