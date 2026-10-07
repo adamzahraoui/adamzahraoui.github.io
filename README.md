@@ -111,6 +111,44 @@ done
 - Print styling lives in each HTML file’s `@media print` block (`@page A4`,
   `.toolbar { display: none }`, `break-inside: avoid` on entries and projects).
 
+## Google Analytics 4
+
+The site tracks with the official asynchronous Google tag (gtag.js,
+measurement ID `G-LNS9G8HY0N`) via `src/lib/analytics.ts`, initialised once from
+`src/main.tsx`.
+
+- **Production only.** The tag is installed only when
+  `window.location.hostname` is `adamzahraoui.github.io`. On `localhost`, `vite
+  preview` or any other host the module is a no-op: gtag.js is never loaded and
+  no request ever reaches Google.
+- **One `page_view` per load.** `page_view` is fired automatically by gtag.js
+  when the `config` command runs; the app never sends it manually and the init
+  is idempotent, so React StrictMode cannot duplicate it.
+- **One custom event:** `cv_download` with `{ language: "en" | "fr" }`, sent
+  from the single `onClick` handler on each Download CV link in `Hero.tsx`.
+  Nothing else is tracked — no terminal input, no forms, no personal data.
+- **Consent (no banner yet).** Consent defaults are declared *denied* for
+  `ad_storage`, `ad_user_data`, `ad_personalization` and `analytics_storage`
+  before the `config` call, so no advertising features run and analytics runs
+  cookieless. If a consent banner is added later, grant with
+  `gtag('consent', 'update', { analytics_storage: 'granted', ... })`.
+- **Resilient.** Every analytics call is wrapped so that a blocked, slow or
+  broken script can never break the site.
+
+### Verifying in Google Analytics → Realtime
+
+1. Deploy and open `https://adamzahraoui.github.io/` in a browser where you are
+   not logged into Analytics (or use a private/new window).
+2. Open **Analytics (GA4) → Reports → Real-time** in the property for
+   `G-LNS9G8HY0N`.
+3. Reload the page: a `page_view` appears for the traffic source within a
+   second or two.
+4. Click **Download CV → English**: a `cv_download` event with
+   `language = en` appears (same for Français → `fr`).
+5. On the deployed site, open the browser network tab: the
+   `googletagmanager.com/gtag/js` script and `google-analytics.com` beacon are
+   only requested on the real domain, never on `localhost`.
+
 ## The project terminal
 
 `src/components/Terminal.tsx` renders the “Explore my projects” section

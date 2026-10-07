@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import { ArrowDown, Download, ExternalLink, FileText } from 'lucide-react'
 import { GithubIcon } from './BrandIcons'
 import { github, portfolio } from '../data/portfolio'
+import { trackCvDownload } from '../lib/analytics'
 
 export function Hero() {
   const { hero, meta, brand } = portfolio
@@ -105,6 +106,7 @@ export function Hero() {
                         download
                         lang={language.code}
                         hrefLang={language.code}
+                        onClick={() => trackCvDownload(language.code)}
                         aria-label={`${hero.cv.downloadLabel} — ${language.label} (PDF)`}
                         className="inline-flex items-center gap-2 rounded-lg border border-line bg-surface-2 px-3 py-2 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent"
                       >
