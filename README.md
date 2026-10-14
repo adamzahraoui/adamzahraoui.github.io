@@ -122,9 +122,10 @@ measurement ID `G-LNS9G8HY0N`) via `src/lib/analytics.ts`, initialised once from
 `src/main.tsx`.
 
 - **Production only.** The tag is installed only when
-  `window.location.hostname` is `adamzahraoui.github.io`. On `localhost`, `vite
-  preview` or any other host the module is a no-op: gtag.js is never loaded and
-  no request ever reaches Google.
+  `window.location.hostname` is `adamzahraoui.me` (the legacy
+  `adamzahraoui.github.io` host is still recognised for backwards
+  compatibility). On `localhost`, `vite preview` or any other host the module is
+  a no-op: gtag.js is never loaded and no request ever reaches Google.
 - **One `page_view` per load.** `page_view` is fired automatically by gtag.js
   when the `config` command runs; the app never sends it manually and the init
   is idempotent, so React StrictMode cannot duplicate it.
@@ -141,8 +142,8 @@ measurement ID `G-LNS9G8HY0N`) via `src/lib/analytics.ts`, initialised once from
 
 ### Verifying in Google Analytics → Realtime
 
-1. Deploy and open `https://adamzahraoui.github.io/` in a browser where you are
-   not logged into Analytics (or use a private/new window).
+1. Deploy and open `https://adamzahraoui.me/` in a browser where you are not
+   logged into Analytics (or use a private/new window).
 2. Open **Analytics (GA4) → Reports → Real-time** in the property for
    `G-LNS9G8HY0N`.
 3. Reload the page: a `page_view` appears for the traffic source within a
@@ -204,7 +205,7 @@ The hero portrait is Adam's own profile photo, stored locally at
 `src/data/portfolio.ts`. It is not hot-linked from any third-party CDN.
 
 Social previews use an absolute URL built from the deployment origin
-(`https://adamzahraoui.github.io/images/adam-zahraoui.png`) in the `og:image` and
+(`https://adamzahraoui.me/images/adam-zahraoui.png`) in the `og:image` and
 `twitter:image` tags in `index.html`; update both lines if the site moves.
 
 No experience, employers, dates, awards, statistics or proficiency percentages

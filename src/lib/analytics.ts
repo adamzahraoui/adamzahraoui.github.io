@@ -17,13 +17,19 @@
  */
 const MEASUREMENT_ID = 'G-LNS9G8HY0N'
 
-const DEFAULT_PRODUCTION_HOST = 'adamzahraoui.github.io'
+const DEFAULT_PRODUCTION_HOSTS = ['adamzahraoui.me', 'adamzahraoui.github.io']
 /**
- * Override only for local testing (e.g. `VITE_GA_HOSTNAME=localhost npm run
- * build`). Leave unset in real deploys; the built site then only ever tracks on
- * adamzahraoui.github.io.
+ * Override for local testing (e.g. `VITE_GA_HOSTNAME=localhost npm run build`)
+ * or to restrict tracking to a single host. Accepts a comma-separated list.
+ * Leave unset in real deploys; the built site then tracks on both
+ * adamzahraoui.me and the legacy adamzahraoui.github.io host.
  */
-const PRODUCTION_HOST = import.meta.env.VITE_GA_HOSTNAME || DEFAULT_PRODUCTION_HOST
+const PRODUCTION_HOSTS = (
+  import.meta.env.VITE_GA_HOSTNAME || DEFAULT_PRODUCTION_HOSTS.join(',')
+)
+  .split(',')
+  .map((host: string) => host.trim())
+  .filter(Boolean)
 
 declare global {
   interface Window {
@@ -34,7 +40,7 @@ declare global {
 }
 
 function hostIsProduction(): boolean {
-  return typeof window !== 'undefined' && window.location.hostname === PRODUCTION_HOST
+  return typeof window !== 'undefined' && PRODUCTION_HOSTS.includes(window.location.hostname)
 }
 
 /** True only when gtag.js is both allowed (production host) and actually loaded. */
