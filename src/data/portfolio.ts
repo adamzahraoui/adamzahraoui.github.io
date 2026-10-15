@@ -200,6 +200,24 @@ export const portfolio = {
         role: 'Project Manager & Full Stack Developer',
       },
       {
+        name: 'Akidoro',
+        tagline: 'Privacy-first focus timer with projects, notes, whiteboards and local backups',
+        description:
+          'A distraction-free Pomodoro-style focus timer built entirely around local browser storage. Akidoro supports project-linked sessions, rich markdown notes, tasks, editable Excalidraw whiteboards, statistics, an in-page focus mode, music links, and versioned backup export/import — with no accounts or backend.',
+        details: [
+          'Local-first persistence with IndexedDB hydration, non-destructive history recovery, and account-free usage.',
+          'Projects organize related tasks, notes, whiteboards, and recorded focus time.',
+          'Rich notes, whiteboard templates, session history filters, and a distraction-free viewport Zen mode.',
+          'Statistics include weekly charts, streaks, a 365-day GitHub-style activity heatmap, and safe JSON backup restore.',
+        ],
+        tech: ['React 18', 'TypeScript', 'Vite', 'Tailwind CSS', 'Excalidraw', 'IndexedDB', 'Vitest'],
+        repoUrl: 'https://github.com/adamzahraoui/Akidoro',
+        demoUrl: 'https://adamzahraoui.me/Akidoro/',
+        kind: 'Original project',
+        status: 'Live',
+        role: 'Sole Developer',
+      },
+      {
         name: 'Inception',
         tagline: 'Containerized WordPress infrastructure with Docker Compose',
         description:
